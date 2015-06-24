@@ -134,6 +134,29 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+-(void)register_super_properties:(CDVInvokedUrlCommand*)command;
+{
+    CDVPluginResult* pluginResult = nil;
+    Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];
+    NSArray* arguments = command.arguments;
+    NSDictionary* properties = [command.arguments objectAtIndex:0];
+
+    if (mixpanelInstance == nil)
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Mixpanel not initialized"];
+    }
+    else if(properties == nil || 0 == [properties count])
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"missing properties object"];
+    }
+    else
+    {
+        [mixpanelInstance set:properties];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 
 // PEOPLE API
 

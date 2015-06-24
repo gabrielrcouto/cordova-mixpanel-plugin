@@ -33,6 +33,10 @@ mixpanel.track = function(eventName, eventProperties, onSuccess, onFail) {
   exec(onSuccess, onFail, 'Mixpanel', 'track', [eventName, eventProperties]);
 };
 
+mixpanel.registerSuperProperties = function(properties, onSuccess, onFail) {
+  exec(onSuccess, onFail, 'Mixpanel', 'register_super_properties', [properties]);
+};
+
 
 // PEOPLE API
 

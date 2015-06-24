@@ -31,15 +31,15 @@ public class MixpanelPlugin extends CordovaPlugin {
         INIT("init"),
         RESET("reset"),
         TRACK("track"),
-
+        //@MEMED
+        REGISTER_SUPER_PROPERTIES("register_super_properties"),
 
         // PEOPLE API
-
 
         PEOPLE_SET("people_set"),
         PEOPLE_IDENTIFY("people_identify"),
 
-        //PUSH NOTIFICATIONS
+        //@MEMED - PUSH NOTIFICATIONS
 
         PEOPLE_INIT_PUSH_HANDLING("people_init_push_handling");
 
@@ -99,6 +99,8 @@ public class MixpanelPlugin extends CordovaPlugin {
                 return handlePeopleIdentify(args, cbCtx);
             case PEOPLE_INIT_PUSH_HANDLING:
                 return handlePeopleInitPushHandling(args, cbCtx);
+            case REGISTER_SUPER_PROPERTIES:
+                return registerSuperProperties(args, cbCtx);
             default:
                 this.error(cbCtx, "unknown action");
                 return false;
@@ -223,6 +225,7 @@ public class MixpanelPlugin extends CordovaPlugin {
         return true;
     }
 
+    //@MEMED - Função nova
     private boolean handlePeopleInitPushHandling(JSONArray args, final CallbackContext cbCtx) {
         String google12Digit = args.optString(0, "");
         if (TextUtils.isEmpty(google12Digit)) {
@@ -230,6 +233,18 @@ public class MixpanelPlugin extends CordovaPlugin {
             return false;
         }
         mixpanel.getPeople().initPushHandling(google12Digit);
+        cbCtx.success();
+        return true;
+    }
+
+    //@MEMED - Função nova
+    private boolean handleRegisterSuperProperties(JSONArray args, final CallbackContext cbCtx) {
+        JSONObject properties = args.optJSONObject(0);
+        if (properties == null) {
+            this.error(cbCtx, "missing properties object");
+            return false;
+        }
+        mixpanel.registerSuperProperties(properties);
         cbCtx.success();
         return true;
     }
