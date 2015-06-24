@@ -37,7 +37,11 @@ public class MixpanelPlugin extends CordovaPlugin {
 
 
         PEOPLE_SET("people_set"),
-        PEOPLE_IDENTIFY("people_identify");
+        PEOPLE_IDENTIFY("people_identify"),
+
+        //PUSH NOTIFICATIONS
+
+        PEOPLE_INIT_PUSH_HANDLING("people_init_push_handling");
 
         private final String name;
         private static final Map<String, Action> lookup = new HashMap<String, Action>();
@@ -93,6 +97,8 @@ public class MixpanelPlugin extends CordovaPlugin {
                 return handlePeopleSet(args, cbCtx);
             case PEOPLE_IDENTIFY:
                 return handlePeopleIdentify(args, cbCtx);
+            case PEOPLE_INIT_PUSH_HANDLING:
+                return handlePeopleInitPushHandling(args, cbCtx);
             default:
                 this.error(cbCtx, "unknown action");
                 return false;
@@ -213,6 +219,17 @@ public class MixpanelPlugin extends CordovaPlugin {
             return false;
         }
         mixpanel.getPeople().set(properties);
+        cbCtx.success();
+        return true;
+    }
+
+    private boolean handlePeopleInitPushHandling(JSONArray args, final CallbackContext cbCtx) {
+        String google12Digit = args.optString(0, "");
+        if (TextUtils.isEmpty(google12Digit)) {
+            this.error(cbCtx, "missing 12 digit project number of your Google API");
+            return false;
+        }
+        mixpanel.getPeople().initPushHandling(google12Digit);
         cbCtx.success();
         return true;
     }

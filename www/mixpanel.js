@@ -45,6 +45,9 @@ mixpanel.people.set = function(peopleProperties, onSuccess, onFail) {
   exec(onSuccess, onFail, 'Mixpanel', 'people_set', [peopleProperties]);
 };
 
+mixpanel.people.initPushHandling = function(google12Digit, onSuccess, onFail) {
+  exec(onSuccess, onFail, 'Mixpanel', 'people_init_push_handling', [google12Digit]);
+};
 
 // Exports
 
