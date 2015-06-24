@@ -151,7 +151,7 @@
     }
     else
     {
-        [mixpanelInstance set:properties];
+        [mixpanelInstance registerSuperProperties:properties];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
