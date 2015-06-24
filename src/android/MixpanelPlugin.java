@@ -100,7 +100,7 @@ public class MixpanelPlugin extends CordovaPlugin {
             case PEOPLE_INIT_PUSH_HANDLING:
                 return handlePeopleInitPushHandling(args, cbCtx);
             case REGISTER_SUPER_PROPERTIES:
-                return registerSuperProperties(args, cbCtx);
+                return handleRegisterSuperProperties(args, cbCtx);
             default:
                 this.error(cbCtx, "unknown action");
                 return false;

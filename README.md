@@ -22,11 +22,16 @@ cordova plugin add https://github.com/samzilverberg/cordova-mixpanel-plugin.git
 - reset(onSuccess, onFail)
 - track(eventName, eventProperties, onSuccess, onFail)
 
+- registerSuperProperties(properties, onSuccess, onFail)
+
+
 **window.mixpanel.people:**
 
 - identify(distinctId, onSuccess, onFail)
 - set(peopleProperties, onSuccess, onFail)
 
+- initPushHandling(google12Digit, onSuccess, onFail)
+  - Android only
 
 ## TODOs
 
