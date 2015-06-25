@@ -30,6 +30,11 @@ mixpanel.reset = function(onSuccess, onFail) {
 };
 
 mixpanel.track = function(eventName, eventProperties, onSuccess, onFail) {
+  //if you not send an object, iOS will break
+  if (! eventProperties) {
+    eventProperties = {};
+  }
+
   exec(onSuccess, onFail, 'Mixpanel', 'track', [eventName, eventProperties]);
 };
 
