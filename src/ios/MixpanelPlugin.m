@@ -30,6 +30,11 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+-(void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
+{
+    Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];
+    [mixpanelInstance.people addPushDeviceToken:deviceToken];
+}
 
 -(void)flush:(CDVInvokedUrlCommand*)command;
 {

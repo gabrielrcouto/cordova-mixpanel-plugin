@@ -35,8 +35,8 @@ cordova plugin add https://github.com/samzilverberg/cordova-mixpanel-plugin.git
 
 ```
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel.people addPushDeviceToken:deviceToken];
+    MixpanelPlugin *mixpanelHandler = [self getCommandInstance:@"MixpanelPlugin"];
+    [mixpanelHandler didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 ```

@@ -32,6 +32,7 @@
 // PUSH NOTIFICATION
 
 -(void)people_init_push_handling:(CDVInvokedUrlCommand*)command;
+-(void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
 
 
 @end
