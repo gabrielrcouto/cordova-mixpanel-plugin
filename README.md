@@ -42,8 +42,24 @@ cordova plugin add https://github.com/samzilverberg/cordova-mixpanel-plugin.git
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    MixpanelPlugin *mixpanelHandler = [self getCommandInstance:@"MixpanelPlugin"];
+    MixpanelPlugin *mixpanelHandler = [self getCommandInstance:@"Mixpanel"];
     [mixpanelHandler didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    // Show alert for push notifications recevied while the
+    // app is running
+    NSString *message = [[userInfo objectForKey:@"aps"]
+                                   objectForKey:@"alert"];
+    UIAlertView *alert = [[UIAlertView alloc]
+                           initWithTitle:@""
+                                 message:message
+                                delegate:nil
+                       cancelButtonTitle:@"OK"
+                       otherButtonTitles:nil];
+    [alert show];
 }
 ```
 

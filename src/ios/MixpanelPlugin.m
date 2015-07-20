@@ -34,6 +34,9 @@
 {
     Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];
     [mixpanelInstance.people addPushDeviceToken:deviceToken];
+
+    // Call .identify to flush the People record to Mixpanel
+    [mixpanelInstance identify:mixpanelInstance.distinctId];
 }
 
 -(void)flush:(CDVInvokedUrlCommand*)command;
@@ -191,9 +194,6 @@
     {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeNewsstandContentAvailability| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     }
-
-    // Call .identify to flush the People record to Mixpanel
-    [mixpanelInstance identify:mixpanelInstance.distinctId];
 
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
