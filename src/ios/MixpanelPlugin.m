@@ -195,7 +195,7 @@
     // Call .identify to flush the People record to Mixpanel
     [mixpanelInstance identify:mixpanelInstance.distinctId];
 
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK]
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 

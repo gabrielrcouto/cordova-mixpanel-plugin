@@ -34,11 +34,17 @@ cordova plugin add https://github.com/samzilverberg/cordova-mixpanel-plugin.git
   - On iOS, you need to configure. Put the code below into AppDelegate.m
 
 ```
+#import "MixpanelPlugin.h"
+
+- (id) getCommandInstance:(NSString*)className
+{
+  return [self.viewController getCommandInstance:className];
+}
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     MixpanelPlugin *mixpanelHandler = [self getCommandInstance:@"MixpanelPlugin"];
     [mixpanelHandler didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
-
 ```
 
 
