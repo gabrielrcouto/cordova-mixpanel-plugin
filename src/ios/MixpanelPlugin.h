@@ -28,5 +28,11 @@
 -(void)people_identify:(CDVInvokedUrlCommand*)command;
 -(void)people_set:(CDVInvokedUrlCommand*)command;
 
+
+// PUSH NOTIFICATION
+
+-(void)people_init_push_handling:(CDVInvokedUrlCommand*)command;
+
+
 @end
 

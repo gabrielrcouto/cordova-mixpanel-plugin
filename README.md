@@ -31,7 +31,16 @@ cordova plugin add https://github.com/samzilverberg/cordova-mixpanel-plugin.git
 - set(peopleProperties, onSuccess, onFail)
 
 - initPushHandling(google12Digit, onSuccess, onFail)
-  - Android only
+  - On iOS, you need to configure. Put the code below into AppDelegate.m
+
+```
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel.people addPushDeviceToken:deviceToken];
+}
+
+```
+
 
 ## TODOs
 

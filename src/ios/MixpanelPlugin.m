@@ -169,24 +169,44 @@
 }
 
 
+-(void)people_init_push_handling:(CDVInvokedUrlCommand*)command;
+{
+    CDVPluginResult* pluginResult = nil;
+    Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];
+    
+    // Tell iOS you want your app to receive push notifications
+    // This code will work in iOS 8.0 xcode 6.0 or later:
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    // This code will work in iOS 7.0 and below:
+    else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeNewsstandContentAvailability| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+
+    // Call .identify to flush the People record to Mixpanel
+    [mixpanelInstance identify:mixpanelInstance.distinctId];
+
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK]
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+
 -(void)people_set:(CDVInvokedUrlCommand*)command;
 {
     CDVPluginResult* pluginResult = nil;
     Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];
-    NSArray* arguments = command.arguments;
-    NSDictionary* peopleProperties = [command.arguments objectAtIndex:0];
 
     if (mixpanelInstance == nil)
     {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Mixpanel not initialized"];
     }
-    else if(peopleProperties == nil || 0 == [peopleProperties count])
-    {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"missing people properties object"];
-    }
     else
     {
-        [mixpanelInstance.people set:peopleProperties];
+        [mixpanelInstance flush];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
